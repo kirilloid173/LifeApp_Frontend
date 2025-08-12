@@ -1,3 +1,4 @@
+import BlockCurrentChat from './components/BlockCurrentChat/CurrentChat';
 import Header from './components/Header/header';
 import OthersChats from './components/OtherChats/LeftSide';
 function App() {
@@ -5,6 +6,7 @@ function App() {
         <>
             <Header />
             <OthersChats />
+            <BlockCurrentChat />
         </>
     );
 }
