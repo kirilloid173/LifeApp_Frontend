@@ -1,4 +1,4 @@
-import OtherChatLeft from '../OtherChatsLeft/OtherChatsLeft';
+import OtherChatLeft from '../OthersChatsLeft/OthersChatsLeft';
 
 export default function BlockOtherChats() {
     return (

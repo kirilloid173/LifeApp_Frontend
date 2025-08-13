@@ -1,8 +1,8 @@
 @use '/src/utils/SASS/variables' as *;
 
-.block-current-chat {
-    width: 100vw;
+.left-side {
+    width: 300px;
     height: 100vh;
-    position: relative;
     background-color: $primary-color-background;
+    padding: 25px 0 0 25px;
 }
