@@ -6,11 +6,12 @@
     padding: 20px;
     border-radius: 20px;
     border: none;
-
+    height: max-content;
     &.message-in {
         background-color: $primary-color-background-current-chats-in;
     }
     &.message-out {
         background-color: $primary-color-background-current-chats-out;
+        margin-left: auto;
     }
 }
