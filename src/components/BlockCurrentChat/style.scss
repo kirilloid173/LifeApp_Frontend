@@ -1,8 +1,12 @@
 @use '/src/utils/SASS/variables' as *;
 
 .block-current-chat {
-    width: 100vw;
+    width: 70%;
+    margin: 25px 100px;
     height: 100vh;
     position: relative;
     background-color: $primary-color-background;
+    color: $primary-color-font;
+    display: flex;
+    flex-direction: column;
 }

@@ -1,0 +1,16 @@
+@use '/src/utils/SASS/variables' as *;
+
+.message {
+    margin: 25px 0;
+    width: 350px;
+    padding: 20px;
+    border-radius: 20px;
+    border: none;
+
+    &.message-in {
+        background-color: $primary-color-background-current-chats-in;
+    }
+    &.message-out {
+        background-color: $primary-color-background-current-chats-out;
+    }
+}

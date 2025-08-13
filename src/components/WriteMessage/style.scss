@@ -1,11 +1,14 @@
 input[class='input-write-message'] {
     font-size: 30px;
     border-radius: 20px;
+    padding: 10px;
     border: none;
     padding: 10px;
     position: absolute;
     bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #212121;
+    background-color: #494949;
+    color: white;
+    width: 80%;
 }

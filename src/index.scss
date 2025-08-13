@@ -1,3 +1,5 @@
+@use '/src/utils/SASS/variables' as *;
+
 @font-face {
     font-family: 'Roboto';
     src: url('./fonts/Roboto-Regular.ttf');
@@ -8,4 +10,13 @@
     padding: 0;
     box-sizing: content-box;
     font-family: 'Roboto', Arial, sans-serif;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+.content {
+    background-color: $primary-color-background;
 }
