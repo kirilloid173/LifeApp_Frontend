@@ -1,0 +1,6 @@
+@use '/src/utils/SASS/variables' as *;
+
+body {
+    background-color: $primary-color-background;
+    color: $primary-color-font;
+}
