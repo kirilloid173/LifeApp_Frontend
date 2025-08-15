@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './style.scss';
 export default function RegistrationForm() {
-    const [choosenUserOption, setUserIsAuth] = useState('reg');
+    const [choosenUserOption, setUserIsAuth] = useState<string>('reg');
 
     const changeForm = () => {
         setUserIsAuth(choosenUserOption === 'reg' ? 'login' : 'reg');
