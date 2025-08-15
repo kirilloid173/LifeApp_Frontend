@@ -8,6 +8,9 @@ export default function RegistrationForm() {
     };
     return (
         <div className='form'>
+            <p className='form__title-form'>
+                {choosenUserOption === 'reg' ? 'Регистрация' : 'Вход'}
+            </p>
             <div className='form__registration-form form__form-auth'>
                 {choosenUserOption === 'reg' ? (
                     <p>Придумайте ваш ID</p>
@@ -18,7 +21,7 @@ export default function RegistrationForm() {
                 {choosenUserOption === 'reg' ? (
                     <button>Зарегистрироваться</button>
                 ) : (
-                    <button>Войти</button>
+                    <button>Войти в аккаунт</button>
                 )}
                 {choosenUserOption === 'reg' ? (
                     <p className='form__description-form-reg'>
