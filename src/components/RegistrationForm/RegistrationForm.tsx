@@ -17,7 +17,24 @@ export default function RegistrationForm() {
                 ) : (
                     <p>Введите ваш ID</p>
                 )}
-                <input type='text' placeholder='Ваш ID' maxLength={20} />
+                {choosenUserOption === 'reg' ? (
+                    <input
+                        type='text'
+                        id='reg'
+                        placeholder='Ваш новый ID'
+                        maxLength={20}
+                        key='reg'
+                    />
+                ) : (
+                    <input
+                        type='text'
+                        id='login'
+                        placeholder='Ваш ID'
+                        maxLength={20}
+                        key='login'
+                    />
+                )}
+
                 {choosenUserOption === 'reg' ? (
                     <button>Зарегистрироваться</button>
                 ) : (
