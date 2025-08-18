@@ -1,0 +1,5 @@
+@use '/src/utils/SASS/variables' as *;
+
+.empty-loading-page {
+    background-color: $primary-color-background;
+}

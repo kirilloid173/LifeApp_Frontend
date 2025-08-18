@@ -1,0 +1,21 @@
+@use '/src/utils/SASS/mixins' as *;
+@use '/src/utils/SASS/variables' as *;
+.form {
+    @include form;
+    text-align: center;
+
+    button[class='form__continue-retry'] {
+        padding: 15px;
+        border-radius: 20px;
+        border: 3px solid $primary-color-font;
+        font-size: 20px;
+        background-color: $primary-color-background;
+        color: $primary-color-font;
+    }
+
+    p[class='form__description-sorry-connection'] {
+        font-size: 24px;
+        color: $primary-color-font;
+        margin-bottom: 20px;
+    }
+}
