@@ -10,7 +10,8 @@ import { useEffect, useState } from 'react';
 function App() {
     type Roles = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
     const [userIsAuth, setUserIsAuth] = useState<Roles>('unknown');
-
+    const [retryAgain, setRetryAgain] = useState<number>(0);
+    //
     useEffect(() => {
         fetch('http://localhost:3000/checkAuthUser/', {
             credentials: 'include',
@@ -26,10 +27,14 @@ function App() {
                 console.error('Connection is not available, error:', error);
                 setUserIsAuth('errorConnection');
             });
-    }, []);
+    }, [retryAgain]);
     //
     if (userIsAuth === 'errorConnection') {
-        return <ErrorConnectionBackend />;
+        return (
+            <ErrorConnectionBackend
+                retryAgain={() => setRetryAgain((prev) => prev + 1)}
+            />
+        );
     }
     if (userIsAuth === 'unknown') {
         return <EmptyLoadingPage />; // Loading

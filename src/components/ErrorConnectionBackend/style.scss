@@ -11,6 +11,11 @@
         font-size: 20px;
         background-color: $primary-color-background;
         color: $primary-color-font;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
     }
 
     p[class='form__description-sorry-connection'] {
