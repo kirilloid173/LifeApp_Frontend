@@ -21,7 +21,6 @@ function App() {
                 if (data.error) {
                     setUserIsAuth('notIsAuth'); // User is not auth
                 }
-                // TODO: MAKE UP (Not Completed fully)
             })
             .catch((error) => {
                 console.error('Connection is not available, error:', error);

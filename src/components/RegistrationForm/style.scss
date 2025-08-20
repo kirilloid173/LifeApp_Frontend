@@ -35,6 +35,10 @@
                 outline: none;
                 border-color: white;
             }
+
+            &.error {
+                border: 3px solid $border-red-color;
+            }
         }
 
         button {
@@ -48,6 +52,7 @@
             margin-bottom: 12px;
             &:hover {
                 cursor: pointer;
+                text-decoration: underline;
             }
         }
 
