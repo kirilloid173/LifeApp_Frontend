@@ -1,13 +1,9 @@
-function validateReg(inputReg: string): boolean {
-    inputReg = inputReg.trim();
-    if (inputReg.trim()) {
-        if (inputReg.length >= 1 && inputReg.length <= 20) {
-            if (/^[a-zA-Z0-9_-]+$/.test(inputReg)) {
-                return true;
-            }
-        }
-    }
-    return false;
+function validateInput(inputLogin: string): boolean {
+    inputLogin = inputLogin.trim();
+
+    if (!inputLogin.trim()) return false;
+    if (!(inputLogin.length >= 1 && inputLogin.length <= 20)) return false;
+    return true;
 }
 
-export { validateReg };
+export { validateInput };

@@ -13,7 +13,7 @@ function App() {
     const [retryAgain, setRetryAgain] = useState<number>(0);
     //
     useEffect(() => {
-        fetch('http://localhost:3000/checkAuthUser/', {
+        fetch('http://127.0.0.1:3000/checkAuthUser/', {
             credentials: 'include',
         })
             .then(async (res) => {
