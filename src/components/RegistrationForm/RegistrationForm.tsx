@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './style.scss';
-import { validateInput } from './validate';
+import validateInput from './validate';
+import sendDataToBackend from './sendDataToBackend';
 export default function RegistrationForm() {
     type statusInput = 'error' | '';
 
@@ -19,44 +20,33 @@ export default function RegistrationForm() {
         loginInput: string,
         passwordInput: string
     ) => {
-        console.log('ResultValidateLogin -> ', statusValidateLogin);
-
-        if (statusValidateLogin && statusValidatePassword) {
-            fetch('http://127.0.0.1:3000/regNewUser', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                    loginUser: loginInput,
-                    passwordUser: passwordInput,
-                }),
-            })
-                .then(async (res) => {
-                    const data = await res.json();
-                    if (!data.error) {
-                        console.log('User is created');
-                    } else {
-                        console.log('Error, ', data.error);
-                    }
-                })
-                .catch((error) => {
-                    console.log(
-                        'Cannot connect to backend service, error -> ',
-                        error
-                    );
-                });
-        }
+        //Block UI Errors
+        if (statusValidateLogin) setErrorLoginReg('');
+        if (statusValidatePassword) setErrorLoginReg('');
 
         if (!statusValidateLogin) setErrorLoginReg('error');
         else setErrorLoginReg('');
 
         if (!statusValidatePassword) setErrorPasswordReg('error');
         else setErrorPasswordReg('');
+        // Block UI Errors
+
+        if (statusValidateLogin && statusValidatePassword)
+            sendDataToBackend(
+                statusValidateLogin,
+                statusValidatePassword,
+                loginInput,
+                passwordInput
+            );
     };
 
     const sendValidateData = (loginInput: string, passwordInput: string) => {
-        resultValidate(validateInput(loginInput), loginInput, passwordInput);
+        resultValidate(
+            validateInput(loginInput),
+            validateInput(passwordInput),
+            loginInput,
+            passwordInput
+        );
     };
 
     return (

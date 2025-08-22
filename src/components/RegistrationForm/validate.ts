@@ -6,4 +6,4 @@ function validateInput(inputLogin: string): boolean {
     return true;
 }
 
-export { validateInput };
+export default validateInput;
