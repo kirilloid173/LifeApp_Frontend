@@ -42,8 +42,8 @@ export default function RegistrationForm() {
 
     const sendValidateData = (loginInput: string, passwordInput: string) => {
         resultValidate(
-            validateInput(loginInput),
-            validateInput(passwordInput),
+            validateInput(loginInput, 'login'),
+            validateInput(passwordInput, 'password'),
             loginInput,
             passwordInput
         );
