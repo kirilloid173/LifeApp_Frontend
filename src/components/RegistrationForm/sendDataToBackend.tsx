@@ -17,10 +17,9 @@ function sendDataToBackend(
         })
             .then(async (res) => {
                 const data = await res.json();
-                if (!data.error) {
-                    console.log('User is created');
-                } else {
-                    console.log('Error, ', data.error);
+                console.log(data);
+                if (res.ok) {
+                    //
                 }
             })
             .catch((error) => {
