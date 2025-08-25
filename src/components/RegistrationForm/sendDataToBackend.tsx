@@ -12,15 +12,12 @@ function sendDataToBackend(
             },
             body: JSON.stringify({
                 loginUser: loginInput,
-                passwordUser: passwordInput,
+                passwordInputUser: passwordInput,
             }),
         })
             .then(async (res) => {
                 const data = await res.json();
                 console.log(data);
-                if (res.ok) {
-                    //
-                }
             })
             .catch((error) => {
                 console.log(
