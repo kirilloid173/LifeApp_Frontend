@@ -6,11 +6,16 @@ import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import EmptyLoadingPage from './components/EmptyLoadingPage/EmptyLoadingPage';
 import ErrorConnectionBackend from './components/ErrorConnectionBackend/ErrorConnectionBackend';
 import { useEffect, useState } from 'react';
-
+import storeStatusAuth from './stores/statusAuth.ts';
+import statusAuthStore from './stores/statusAuth.ts';
 function App() {
     type Roles = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
-    const [userIsAuth, setUserIsAuth] = useState<Roles>('unknown');
+    // const [userIsAuth, setUserIsAuth] = useState<Roles>('unknown');
+    const useAuthStore = storeStatusAuth<Roles>((state) => state.statusAuth);
     const [retryAgain, setRetryAgain] = useState<number>(0);
+    const changeStatusAuthStore = statusAuthStore(
+        (state) => state.changeStatus
+    );
     //
     useEffect(() => {
         fetch('http://127.0.0.1:3000/checkAuthUser/', {
@@ -19,28 +24,29 @@ function App() {
             .then(async (res) => {
                 const data = await res.json();
                 if (data.error) {
-                    setUserIsAuth('notIsAuth'); // User is not auth
+                    changeStatusAuthStore('notIsAuth');
+                    // User is not auth
                 }
             })
             .catch((error) => {
                 console.error('Connection is not available, error:', error);
-                setUserIsAuth('errorConnection');
+                changeStatusAuthStore('errorConnection');
             });
     }, [retryAgain]);
     //
-    if (userIsAuth === 'errorConnection') {
+    if (useAuthStore === 'errorConnection') {
         return (
             <ErrorConnectionBackend
                 retryAgain={() => setRetryAgain((prev) => prev + 1)}
             />
         );
     }
-    if (userIsAuth === 'unknown') {
+    if (useAuthStore === 'unknown') {
         return <EmptyLoadingPage />; // Loading
     }
-    if (userIsAuth === 'notIsAuth') {
+    if (useAuthStore === 'notIsAuth') {
         return <RegistrationPage />;
-    } else if (userIsAuth === 'isAuth')
+    } else if (useAuthStore === 'isAuth')
         return (
             <div className='content'>
                 <Header />

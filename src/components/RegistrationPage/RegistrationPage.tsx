@@ -6,5 +6,5 @@ export default function RegistrationPage() {
     const [typeForm, setTypeForm] = useState<TypeNameForm>('reg');
 
     if (typeForm === 'reg') return <RegistrationForm />;
-    if (typeForm === 'login') return <LoginForm />;
+    // if (typeForm === 'login') return <LoginForm />;
 }

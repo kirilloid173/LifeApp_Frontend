@@ -4,7 +4,6 @@ import validateInput from './validate';
 import sendDataToBackend from './sendDataToBackend';
 export default function RegistrationForm() {
     type statusInput = 'error' | '';
-
     const [inputLoginReg, setInputLoginReg] = useState<string>('');
     const [inputPasswordReg, setInputPasswordReg] = useState<string>('');
     const [errorLoginReg, setErrorLoginReg] = useState<statusInput>('');
