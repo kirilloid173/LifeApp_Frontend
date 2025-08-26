@@ -11,10 +11,10 @@ import statusAuthStore from './stores/statusAuth.ts';
 function App() {
     type Roles = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
     // const [userIsAuth, setUserIsAuth] = useState<Roles>('unknown');
-    const useAuthStore = storeStatusAuth<Roles>((state) => state.statusAuth);
+    const statusAuth = storeStatusAuth<Roles>((state) => state.statusAuth);
     const [retryAgain, setRetryAgain] = useState<number>(0);
     const changeStatusAuthStore = statusAuthStore(
-        (state) => state.changeStatus
+        (state) => state.changeStatusAuth
     );
     //
     useEffect(() => {
@@ -34,19 +34,19 @@ function App() {
             });
     }, [retryAgain]);
     //
-    if (useAuthStore === 'errorConnection') {
+    if (statusAuth === 'errorConnection') {
         return (
             <ErrorConnectionBackend
                 retryAgain={() => setRetryAgain((prev) => prev + 1)}
             />
         );
     }
-    if (useAuthStore === 'unknown') {
+    if (statusAuth === 'unknown') {
         return <EmptyLoadingPage />; // Loading
     }
-    if (useAuthStore === 'notIsAuth') {
+    if (statusAuth === 'notIsAuth') {
         return <RegistrationPage />;
-    } else if (useAuthStore === 'isAuth')
+    } else if (statusAuth === 'isAuth')
         return (
             <div className='content'>
                 <Header />

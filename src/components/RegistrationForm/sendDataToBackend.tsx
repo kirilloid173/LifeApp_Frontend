@@ -1,3 +1,5 @@
+import { usePopupRegStore } from '../../stores/popupReg';
+
 function sendDataToBackend(
     statusValidateLogin: boolean,
     statusValidatePassword: boolean,
@@ -5,6 +7,7 @@ function sendDataToBackend(
     passwordInput: string
 ) {
     if (statusValidateLogin && statusValidatePassword) {
+        const { changeStatusPopup } = usePopupRegStore.getState();
         fetch('http://127.0.0.1:3000/regNewUser', {
             method: 'POST',
             headers: {
@@ -18,7 +21,7 @@ function sendDataToBackend(
             .then(async (res) => {
                 const data = await res.json();
                 if (data.statusCreated && data.error === false) {
-                    console.log('Success Amogus');
+                    changeStatusPopup('successReg');
                 }
             })
             .catch((error) => {

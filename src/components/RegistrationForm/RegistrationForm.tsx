@@ -2,12 +2,15 @@ import { useState } from 'react';
 import './style.scss';
 import validateInput from './validate';
 import sendDataToBackend from './sendDataToBackend';
+
 export default function RegistrationForm() {
-    type statusInput = 'error' | '';
+    type StatusInput = 'error' | '';
+
     const [inputLoginReg, setInputLoginReg] = useState<string>('');
     const [inputPasswordReg, setInputPasswordReg] = useState<string>('');
-    const [errorLoginReg, setErrorLoginReg] = useState<statusInput>('');
-    const [errorPasswordReg, setErrorPasswordReg] = useState<statusInput>('');
+    const [errorLoginReg, setErrorLoginReg] = useState<StatusInput>('');
+    const [errorPasswordReg, setErrorPasswordReg] = useState<StatusInput>('');
+
     //
     // const changeForm = () => {
     //     setUserIsAuth(choosenUserOption === 'reg' ? 'login' : 'reg');

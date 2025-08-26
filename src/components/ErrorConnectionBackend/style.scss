@@ -1,7 +1,7 @@
 @use '/src/utils/SASS/mixins' as *;
 @use '/src/utils/SASS/variables' as *;
 .form {
-    @include form;
+    @include form-center-absolute;
     text-align: center;
 
     button[class='form__continue-retry'] {

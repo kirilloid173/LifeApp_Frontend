@@ -4,12 +4,12 @@ type AuthStatus = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
 
 interface StoreStatusAuth {
     statusAuth: AuthStatus;
-    changeStatus: (status: AuthStatus) => void;
+    changeStatusAuth: (status: AuthStatus) => void;
 }
 
-const statusAuthStore = create<StoreStatusAuth>((set) => ({
+const useStatusAuthStore = create<StoreStatusAuth>((set) => ({
     statusAuth: 'unknown',
-    changeStatus: (status) => set({ statusAuth: status }),
+    changeStatusAuth: (status) => set({ statusAuth: status }),
 }));
 
-export default statusAuthStore;
+export default useStatusAuthStore;

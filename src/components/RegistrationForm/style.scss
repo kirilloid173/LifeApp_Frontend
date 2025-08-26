@@ -1,9 +1,28 @@
 @use '/src/utils/SASS/variables' as *;
 @use '/src/utils/SASS/mixins' as *;
 
+.popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    border: 3px solid white;
+    background-color: $primary-color-background;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    p {
+        text-align: center;
+        margin: 25px 0;
+    }
+}
+
 .form {
     @include flex-column-center;
-    @include form;
+    @include form-center-absolute;
 
     .form__title-form {
         font-size: 24px;
