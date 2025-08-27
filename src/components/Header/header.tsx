@@ -1,6 +1,22 @@
 import './style.scss';
+import statusAuthStore from '../../stores/statusAuth';
 
 export default function Header() {
+    const changeStatusAuthStore = statusAuthStore(
+        (state) => state.changeStatusAuth
+    );
+
+    const removeAuthUser = () => {
+        fetch('/api/deleteTokenAuth/', {
+            method: 'POST',
+            credentials: 'include',
+        }).then(async (res) => {
+            const data = await res.json();
+            if (res.ok && data.statusDeleted) {
+                changeStatusAuthStore('notIsAuth');
+            }
+        });
+    };
     return (
         <div className='header'>
             <div className='header__inner-block'>
@@ -8,7 +24,9 @@ export default function Header() {
             </div>
             <div className='header__outter-block'>
                 <p>Здравствуйте {null}</p>
-                <p>Выйти</p>
+                <p className='header__exit' onClick={() => removeAuthUser()}>
+                    Выйти
+                </p>
             </div>
         </div>
     );

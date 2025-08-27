@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: space-between;
 
-    .header__outter-block {
+    &__outter-block {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -15,6 +15,11 @@
 
         p:last-child {
             margin: 0 100px;
+        }
+
+        p[class='header__exit']:hover {
+            text-decoration: underline;
+            cursor: pointer;
         }
     }
 }

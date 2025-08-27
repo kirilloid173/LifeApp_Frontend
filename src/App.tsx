@@ -1,17 +1,14 @@
-import BlockCurrentChat from './components/BlockCurrentChat/CurrentChat';
 import Header from './components/Header/header';
-import OthersChats from './components/LeftSideChats/LeftSide';
-import CenterBlock from './components/CenterBlock/CenterBlock';
 import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import EmptyLoadingPage from './components/EmptyLoadingPage/EmptyLoadingPage';
 import ErrorConnectionBackend from './components/ErrorConnectionBackend/ErrorConnectionBackend';
 import { useEffect, useState } from 'react';
 import storeStatusAuth from './stores/statusAuth.ts';
 import statusAuthStore from './stores/statusAuth.ts';
+import Chats from './components/Chats/chats';
 function App() {
-    type Roles = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
-    // const [userIsAuth, setUserIsAuth] = useState<Roles>('unknown');
-    const statusAuth = storeStatusAuth<Roles>((state) => state.statusAuth);
+    type RolesAuth = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
+    const statusAuth = storeStatusAuth<RolesAuth>((state) => state.statusAuth);
     const [retryAgain, setRetryAgain] = useState<number>(0);
     const changeStatusAuthStore = statusAuthStore(
         (state) => state.changeStatusAuth
@@ -54,12 +51,9 @@ function App() {
         return (
             <div className='content'>
                 <Header />
-                {/* Chat, if user are auth */}
-                <CenterBlock>
-                    <OthersChats />
-                    <BlockCurrentChat />
-                </CenterBlock>
-                {/* Chat, if user are auth */}
+                {/* Chats, if user are auth */}
+                <Chats />
+                {/* Chats, if user are auth */}
             </div>
         );
 }
