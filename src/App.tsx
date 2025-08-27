@@ -24,7 +24,10 @@ function App() {
         })
             .then(async (res) => {
                 const data = await res.json();
-                if (data.error) {
+                if (data.statusAuth && res.ok) {
+                    changeStatusAuthStore('isAuth');
+                    // User is auth
+                } else {
                     changeStatusAuthStore('notIsAuth');
                     // User is not auth
                 }
