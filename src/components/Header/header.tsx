@@ -1,8 +1,8 @@
 import './style.scss';
-import statusAuthStore from '../../stores/statusAuth';
+import { useStatusAuthStore } from '../../stores/statusAuth';
 
 export default function Header() {
-    const changeStatusAuthStore = statusAuthStore(
+    const changeStatusAuthStore = useStatusAuthStore(
         (state) => state.changeStatusAuth
     );
 

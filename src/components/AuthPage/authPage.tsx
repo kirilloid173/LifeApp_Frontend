@@ -1,8 +1,10 @@
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import './style.scss';
 import { usePopupRegStore } from '../../stores/popupReg';
-import { useTypeFormStore } from '../../stores/typeFormAuth';
-export default function RegistrationPage() {
+import { useTypeFormStore } from '../../stores/typeForm';
+import { useStatusAuthStore } from '../../stores/statusAuth';
+import { LoginForm } from '../LoginForm/LoginForm';
+export default function AuthPage() {
     type TypesForm = 'reg' | 'login';
     type PopupStatus =
         | 'cannotConnectBackend'
@@ -10,6 +12,9 @@ export default function RegistrationPage() {
         | 'successReg'
         | 'turnOff'; // turnOff = Not show popup
 
+    const changeAuthStatus = useStatusAuthStore(
+        (state) => state.changeStatusAuth
+    );
     const typeForm = useTypeFormStore<TypesForm>((state) => state.typeForm);
     const statusPopup = usePopupRegStore<PopupStatus>(
         (state) => state.statusPopup
@@ -24,7 +29,9 @@ export default function RegistrationPage() {
                             Вы успешно зарегистрировались!
                             <br /> Добро пожаловать в LifeApp
                         </p>
-                        <button>Войти в чат</button>
+                        <button onClick={() => changeAuthStatus('isAuth')}>
+                            Войти в чат
+                        </button>
                     </div>
                 ) : null}
                 <div
@@ -32,8 +39,11 @@ export default function RegistrationPage() {
                         statusPopup !== 'turnOff' ? 'reg-page__dark' : ''
                     }`}
                 >
+                    {/*  */}
                     <RegistrationForm />
                 </div>
             </>
         );
+
+    if (typeForm === 'login') return <LoginForm />;
 }

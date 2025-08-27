@@ -1,16 +1,17 @@
 import Header from './components/Header/header';
-import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import EmptyLoadingPage from './components/EmptyLoadingPage/EmptyLoadingPage';
 import ErrorConnectionBackend from './components/ErrorConnectionBackend/ErrorConnectionBackend';
 import { useEffect, useState } from 'react';
-import storeStatusAuth from './stores/statusAuth.ts';
-import statusAuthStore from './stores/statusAuth.ts';
+import { useStatusAuthStore } from './stores/statusAuth';
 import Chats from './components/Chats/chats';
+import AuthPage from './components/AuthPage/authPage';
 function App() {
     type RolesAuth = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
-    const statusAuth = storeStatusAuth<RolesAuth>((state) => state.statusAuth);
+    const statusAuth = useStatusAuthStore<RolesAuth>(
+        (state) => state.statusAuth
+    );
     const [retryAgain, setRetryAgain] = useState<number>(0);
-    const changeStatusAuthStore = statusAuthStore(
+    const changeStatusAuthStore = useStatusAuthStore(
         (state) => state.changeStatusAuth
     );
     //
@@ -46,7 +47,7 @@ function App() {
         return <EmptyLoadingPage />; // Loading
     }
     if (statusAuth === 'notIsAuth') {
-        return <RegistrationPage />;
+        return <AuthPage />;
     } else if (statusAuth === 'isAuth')
         return (
             <div className='content'>

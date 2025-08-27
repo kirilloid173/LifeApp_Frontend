@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './style.scss';
 import validateInput from './validate';
 import sendDataToBackend from './sendDataToBackend';
-
+import { useTypeFormStore } from '../../stores/typeForm';
 export default function RegistrationForm() {
     type StatusInput = 'error' | '';
 
@@ -10,7 +10,7 @@ export default function RegistrationForm() {
     const [inputPasswordReg, setInputPasswordReg] = useState<string>('');
     const [errorLoginReg, setErrorLoginReg] = useState<StatusInput>('');
     const [errorPasswordReg, setErrorPasswordReg] = useState<StatusInput>('');
-
+    const typeForm = useTypeFormStore((state) => state.changeTypeForm);
     //
     // const changeForm = () => {
     //     setUserIsAuth(choosenUserOption === 'reg' ? 'login' : 'reg');
@@ -86,7 +86,10 @@ export default function RegistrationForm() {
                 </p> */}
             </div>
 
-            <p className='form__little-description-form'>
+            <p
+                className='form__little-description-form'
+                onClick={() => typeForm('login')}
+            >
                 Уже зарегистрированы?
             </p>
 

@@ -12,4 +12,4 @@ const useStatusAuthStore = create<StoreStatusAuth>((set) => ({
     changeStatusAuth: (status) => set({ statusAuth: status }),
 }));
 
-export default useStatusAuthStore;
+export { useStatusAuthStore };
