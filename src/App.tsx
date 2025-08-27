@@ -18,7 +18,8 @@ function App() {
     );
     //
     useEffect(() => {
-        fetch('http://127.0.0.1:3000/checkAuthUser/', {
+        fetch('/api/checkAuthUser/', {
+            method: 'GET',
             credentials: 'include',
         })
             .then(async (res) => {
