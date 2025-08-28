@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { useTypeFormStore } from '../../stores/typeForm';
-
+import { checkAuthUser } from './checkAuthUser';
 function LoginForm() {
     const typeForm = useTypeFormStore((state) => state.changeTypeForm);
+    const [inputLogin, setInputLogin] = useState<string>('');
+    const [inputPassword, setInputPassword] = useState<string>('');
 
     return (
         <>
@@ -14,6 +17,7 @@ function LoginForm() {
                         id='login'
                         placeholder='Логин'
                         maxLength={20}
+                        onChange={(e) => setInputLogin(e.target.value)}
                     />
                     <p>Введите ваш пароль</p>
                     <input
@@ -21,12 +25,9 @@ function LoginForm() {
                         id='password'
                         placeholder='Пароль'
                         maxLength={128}
+                        onChange={(e) => setInputPassword(e.target.value)}
                     />
-                    <button>Войти в аккаунт</button>
-
-                    {/* <p className='form__description-form-reg'>
-                    Любой набор латинский букв или цифр
-                </p> */}
+                    <button onClick={() => checkAuthUser(inputLogin, inputPassword)}>Войти в аккаунт</button>
                 </div>
 
                 <p
@@ -35,10 +36,6 @@ function LoginForm() {
                 >
                     Не зарегистрированы?
                 </p>
-
-                {/* <p className='form__little-description-form'>
-                Ещё не зарегистрированы?
-            </p> */}
             </div>
         </>
     );

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './style.scss';
-import validateInput from './validate';
+import validateInput from '../../lib/validate';
 import sendDataToBackend from './sendDataToBackend';
 import { useTypeFormStore } from '../../stores/typeForm';
 export default function RegistrationForm() {

@@ -1,7 +1,10 @@
 import './style.scss';
 import { useStatusAuthStore } from '../../stores/statusAuth';
-
+import { usePopupRegStore } from '../../stores/popupReg';
 export default function Header() {
+    const changePopupStatus = usePopupRegStore(
+        (state) => state.changeStatusPopup
+    );
     const changeStatusAuthStore = useStatusAuthStore(
         (state) => state.changeStatusAuth
     );
@@ -14,6 +17,7 @@ export default function Header() {
             const data = await res.json();
             if (res.ok && data.statusDeleted) {
                 changeStatusAuthStore('notIsAuth');
+                changePopupStatus('turnOff');
             }
         });
     };
