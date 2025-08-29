@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useStatusAuthStore } from './stores/statusAuth';
 import Chats from './components/Chats/chats';
 import AuthPage from './components/AuthPage/authPage';
+import { useLoginNameStore } from './stores/loginName';
 function App() {
     type RolesAuth = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
     const statusAuth = useStatusAuthStore<RolesAuth>(
@@ -14,18 +15,20 @@ function App() {
     const changeStatusAuthStore = useStatusAuthStore(
         (state) => state.changeStatusAuth
     );
+    const insertLoginName = useLoginNameStore((state) => state.changeLoginName);
     //
     useEffect(() => {
-        fetch('/api/checkAuthUser/', {
+        fetch('api/checkAuthUser/', {
             method: 'GET',
             credentials: 'include',
         })
             .then(async (res) => {
                 const data = await res.json();
-                if (data.statusAuth && res.ok) {
+                if (data.statusAuth === true && res.ok && data.loginAuth) {
                     changeStatusAuthStore('isAuth');
+                    insertLoginName(data.loginAuth);
                     // User is auth
-                } else {
+                } else if (data.statusAuth === false) {
                     changeStatusAuthStore('notIsAuth');
                     // User is not auth
                 }

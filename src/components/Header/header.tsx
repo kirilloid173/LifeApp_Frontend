@@ -1,6 +1,7 @@
 import './style.scss';
 import { useStatusAuthStore } from '../../stores/statusAuth';
 import { usePopupRegStore } from '../../stores/popupReg';
+import { useLoginNameStore } from '../../stores/loginName';
 export default function Header() {
     const changePopupStatus = usePopupRegStore(
         (state) => state.changeStatusPopup
@@ -8,6 +9,7 @@ export default function Header() {
     const changeStatusAuthStore = useStatusAuthStore(
         (state) => state.changeStatusAuth
     );
+    const loginName = useLoginNameStore((state) => state.loginName);
 
     const removeAuthUser = () => {
         fetch('/api/deleteTokenAuth/', {
@@ -27,7 +29,7 @@ export default function Header() {
                 <h1 className='header__name-app'>LifeApp</h1>
             </div>
             <div className='header__outter-block'>
-                <p>Здравствуйте {null}</p>
+                <p>Здравствуйте {loginName}</p>
                 <p className='header__exit' onClick={() => removeAuthUser()}>
                     Выйти
                 </p>
