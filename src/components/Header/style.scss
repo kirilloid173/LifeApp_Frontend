@@ -1,25 +1,32 @@
+@use '/src/utils/SASS/variables' as *;
+
 .header {
     background-color: #5e4646;
     color: white;
-    padding: 10px;
+    padding: 10px 50px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
     &__outter-block {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-
-        p:last-child {
-            margin: 0 100px;
-        }
+        gap: 50px;
 
         p[class='header__exit']:hover {
             text-decoration: underline;
             cursor: pointer;
         }
+    }
+
+    input[class='header__search-user'] {
+        padding: 10px;
+        border-radius: 20px;
+        border: none;
+        background-color: $primary-color-background-current-chats-in;
+        color: white;
+        font-size: 14px;
     }
 }

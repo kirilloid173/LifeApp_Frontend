@@ -69,7 +69,7 @@ export default function RegistrationForm() {
                     type='password'
                     id='password'
                     placeholder='Пароль'
-                    maxLength={128}
+                    maxLength={60}
                     onChange={(e) => setInputPasswordReg(e.target.value)}
                     className={errorPasswordReg}
                 />
