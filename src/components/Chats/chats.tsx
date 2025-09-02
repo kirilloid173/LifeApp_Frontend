@@ -4,11 +4,9 @@ import CenterBlock from '../CenterBlock/CenterBlock';
 
 export default function Chats() {
     return (
-        <>
-            <CenterBlock>
-                <OthersChats />
-                <BlockCurrentChat />
-            </CenterBlock>
-        </>
+        <CenterBlock>
+            <OthersChats />
+            <BlockCurrentChat />
+        </CenterBlock>
     );
 }
