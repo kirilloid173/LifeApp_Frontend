@@ -1,0 +1,35 @@
+@use '../../utils/SASS/variables' as *;
+@use '../../utils/SASS/mixins' as *;
+
+.result-logins {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: $primary-color-background-dark;
+    padding: 10px;
+    border-radius: 20px;
+    position: absolute;
+    z-index: 30;
+    width: $width-input-search-users;
+
+    &__login-result {
+        padding: 16px 0;
+        border-bottom: 1.16px solid white;
+        width: 80%;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        p {
+            text-align: center;
+            padding: 10px;
+            &.text-hover:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+    }
+}

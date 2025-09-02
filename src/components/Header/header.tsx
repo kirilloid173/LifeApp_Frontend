@@ -3,6 +3,8 @@ import { useStatusAuthStore } from '../../stores/statusAuth';
 import { usePopupRegStore } from '../../stores/popupReg';
 import { useLoginNameStore } from '../../stores/loginName';
 import { useEffect, useState } from 'react';
+import { HeaderLoginsResult } from '../HeaderLogins/headerLogins';
+import { useSearchPopupStore } from '../../stores/searchUsers';
 export default function Header() {
     const changePopupStatus = usePopupRegStore(
         (state) => state.changeStatusPopup
@@ -11,13 +13,15 @@ export default function Header() {
     const changeStatusAuthStore = useStatusAuthStore(
         (state) => state.changeStatusAuth
     );
+    const changeResultUsers = useSearchPopupStore(
+        (state) => state.changeResultUsers
+    );
 
     const loginName = useLoginNameStore((state) => state.loginName);
 
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState<string>('');
 
     useEffect(() => {
-        console.log(searchValue);
         const timeout = setTimeout(() => {
             if (searchValue.length > 0) {
                 fetch('api/findUser', {
@@ -28,7 +32,20 @@ export default function Header() {
                     body: JSON.stringify({
                         login: searchValue,
                     }),
+                }).then(async (res) => {
+                    if (res.status === 404) {
+                        changeResultUsers([{ defaultValue: 'notFound' }]);
+                        return;
+                    }
+                    const data = await res.json();
+                    console.log(data.resultSearch);
+                    if (res.ok && data.resultSearch.length) {
+                        console.log(data.resultSearch);
+                        changeResultUsers(data.resultSearch);
+                    }
                 });
+            } else if (searchValue.length === 0) {
+                changeResultUsers([{ defaultValue: 'searchEmpty' }]);
             }
         }, 1000);
 
@@ -53,14 +70,17 @@ export default function Header() {
                 <h1 className='header__name-app'>LifeApp</h1>
             </div>
             <div className='header__outter-block'>
-                <input
-                    type='text'
-                    className='header__search-user'
-                    placeholder='Поиск...'
-                    defaultValue=''
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    maxLength={20}
-                />
+                <div className='outter-block__form-logins-result'>
+                    <input
+                        type='text'
+                        className='header__search-user'
+                        placeholder='Поиск пользователя'
+                        defaultValue=''
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        maxLength={20}
+                    />
+                    <HeaderLoginsResult />
+                </div>
                 <p>Здравствуйте {loginName}</p>
                 <p className='header__exit' onClick={() => removeAuthUser()}>
                     Выйти

@@ -19,6 +19,11 @@
             text-decoration: underline;
             cursor: pointer;
         }
+
+        &-form-logins-result {
+            display: flex;
+            flex-direction: column;
+        }
     }
 
     input[class='header__search-user'] {
