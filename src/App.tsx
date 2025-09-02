@@ -6,6 +6,7 @@ import { useStatusAuthStore } from './stores/statusAuth';
 import Chats from './components/Chats/chats';
 import AuthPage from './components/AuthPage/authPage';
 import { useLoginNameStore } from './stores/loginName';
+
 function App() {
     type RolesAuth = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
     const statusAuth = useStatusAuthStore<RolesAuth>(

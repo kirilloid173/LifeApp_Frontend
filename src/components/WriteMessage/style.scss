@@ -1,13 +1,39 @@
-input[class='input-write-message'] {
-    font-size: 20px;
-    border-radius: 20px;
-    padding: 10px 20px;
-    border: none;
+@use '../../utils/SASS/variables' as *;
+
+.block-write-messages {
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    bottom: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #494949;
-    color: white;
-    width: 80%;
+    bottom: calc(0% + 150px);
+    width: 100%;
+
+    textarea[class='input-write-message'] {
+        font-size: 20px;
+        border-radius: 20px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #494949;
+        color: white;
+        width: 70%;
+        resize: none;
+        overflow: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &__send-message {
+        width: 150px;
+        background-color: $primary-color-background-dark;
+        border: none;
+        font-size: 20px;
+        color: $primary-color-font;
+        padding: 10px 20px;
+        border-radius: 20px;
+        background-color: $header-color;
+        margin-top: 16px;
+    }
 }

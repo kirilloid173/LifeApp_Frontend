@@ -5,6 +5,7 @@ import { useLoginNameStore } from '../../stores/loginName';
 import { useEffect, useState } from 'react';
 import { HeaderLoginsResult } from '../HeaderLogins/headerLogins';
 import { useSearchPopupStore } from '../../stores/searchUsers';
+
 export default function Header() {
     const changePopupStatus = usePopupRegStore(
         (state) => state.changeStatusPopup
@@ -42,6 +43,8 @@ export default function Header() {
             });
     }, []);
 
+    useEffect(() => {});
+
     useEffect(() => {
         const timeout = setTimeout(() => {
             if (searchValue.length > 0) {
@@ -51,7 +54,8 @@ export default function Header() {
                         'Content-type': 'application/json',
                     },
                     body: JSON.stringify({
-                        login: searchValue,
+                        loginOfUser: loginName,
+                        loginInSearch: searchValue,
                     }),
                 }).then(async (res) => {
                     if (res.status === 404) {
