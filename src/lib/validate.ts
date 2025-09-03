@@ -9,7 +9,7 @@ function validateInput(inputData: string, typeCheck: TypesCheck): boolean {
 
     if (typeCheck === 'login') {
         if (!inputData.trim()) return false;
-        if (!/^[A-Za-z]+$/.test(inputData)) return false;
+        if (!/^[A-Za-z0-9]+$/.test(inputData)) return false;
         if (!(inputData.length >= 1 && inputData.length <= 30)) return false;
         return true;
     }

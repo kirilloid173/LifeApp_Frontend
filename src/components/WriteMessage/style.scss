@@ -35,5 +35,10 @@
         border-radius: 20px;
         background-color: $header-color;
         margin-top: 16px;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
     }
 }
