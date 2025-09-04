@@ -13,7 +13,7 @@ export default function WriteMessage() {
             },
             body: JSON.stringify({
                 withWhoChat: withWhoChat,
-                messageText: messageText,
+                messageText: messageText.current,
             }),
         });
     };
