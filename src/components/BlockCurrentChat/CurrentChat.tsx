@@ -6,6 +6,7 @@ import { AskChooseChat } from '../AskChooseChat/askChooseChat';
 import './style.scss';
 
 export default function BlockCurrentChat() {
+    
     const choosenChatStatus = useChoosenChatStore((state) => state.choosen);
     return choosenChatStatus ? (
         <div className='block-current-chat'>
