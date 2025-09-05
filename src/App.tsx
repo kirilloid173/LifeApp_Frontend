@@ -29,7 +29,7 @@ function App() {
                     changeStatusAuthStore('isAuth');
                     insertLoginName(data.loginAuth);
                     // User is auth
-                } else if (data.statusAuth === false) {
+                } else if (data.error === true || data.statusAuth === false) {
                     changeStatusAuthStore('notIsAuth');
                     // User is not auth
                 }

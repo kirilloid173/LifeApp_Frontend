@@ -20,8 +20,25 @@ function HeaderLoginsResult() {
         if (!loginUser || !loginUser.length) {
             return;
         }
+
+        if (loginUser) {
+            fetch('api/getChatIdAndMessages', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    withWho: loginUser,
+                }),
+            }).then(async (res) => {
+                const data = await res.json();
+                console.log(data);
+            });
+        }
+
         choosenChatStatus(true);
-        changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]);
+        changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
         changeWithWhoChatLogin(loginUser);
     };
 

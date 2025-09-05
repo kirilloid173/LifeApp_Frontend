@@ -4,7 +4,7 @@ import { useWithWhoChatStore } from '../../stores/withWhoChat';
 export default function WriteMessage() {
     const messageText = useRef('');
     const withWhoChat = useWithWhoChatStore((state) => state.withWhoChat);
-    const sendMessage = () => {
+    const sendMessageFirstTime = () => {
         fetch('api/sendMessage', {
             method: 'POST',
             credentials: 'include',
@@ -29,7 +29,7 @@ export default function WriteMessage() {
                 />
                 <button
                     className='block-write-messages__send-message'
-                    onClick={sendMessage}
+                    onClick={sendMessageFirstTime}
                 >
                     Отправить
                 </button>
