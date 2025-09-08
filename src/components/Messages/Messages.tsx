@@ -1,17 +1,20 @@
 import './style.scss';
-
+import { useMessagesTreeStore } from '../../stores/messagesTree';
 export default function Messages() {
+    const messagesTree = useMessagesTreeStore((state) => state.tree);
     return (
         <>
-            {/* <div className='message message-in'>
-                <p>Author</p>
-                <p>Text of messages, just some fish text, again</p>
-            </div>
-
-            <div className='message message-out'>
-                <p>Author</p>
-                <p>Text of messages, just some fish text, again</p>
-            </div> */}
+            {messagesTree.map((message, index) => (
+                <div
+                    className={`message ${
+                        message.authorMessage ? 'message-out' : 'message-in'
+                    }`}
+                    key={index}
+                >
+                    {/* <p>Author</p> */}
+                    <p>{message.message}</p>
+                </div>
+            ))}
         </>
     );
 }

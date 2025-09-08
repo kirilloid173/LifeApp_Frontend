@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useTypeFormStore } from '../../stores/typeForm';
 import { checkAuthUser } from './checkAuthUser';
+import { useStatusAuthStore } from '../../stores/statusAuth';
 function LoginForm() {
+    const statusAuth = useStatusAuthStore((state) => state.changeStatusAuth);
     const typeForm = useTypeFormStore((state) => state.changeTypeForm);
     const [inputLogin, setInputLogin] = useState<string>('');
     const [inputPassword, setInputPassword] = useState<string>('');
@@ -27,7 +29,11 @@ function LoginForm() {
                         maxLength={128}
                         onChange={(e) => setInputPassword(e.target.value)}
                     />
-                    <button onClick={() => checkAuthUser(inputLogin, inputPassword)}>Войти в аккаунт</button>
+                    <button
+                        onClick={() => checkAuthUser(inputLogin, inputPassword, statusAuth)}
+                    >
+                        Войти в аккаунт
+                    </button>
                 </div>
 
                 <p

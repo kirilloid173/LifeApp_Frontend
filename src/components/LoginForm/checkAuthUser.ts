@@ -1,13 +1,19 @@
 import validateInput from '../../lib/validate';
 
-function checkAuthUser(loginInput: string, passwordInput: string): void {
+type AuthStatus = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
+
+function checkAuthUser(
+    loginInput: string,
+    passwordInput: string,
+    statusAuthStore: (status: AuthStatus) => void
+): void {
+    console.log(typeof statusAuthStore);
     if (
         validateInput(loginInput, 'login') &&
         validateInput(passwordInput, 'password')
     ) {
         fetch('api/checkLoginForm', {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 'Content-type': 'application/json',
             },
@@ -19,10 +25,10 @@ function checkAuthUser(loginInput: string, passwordInput: string): void {
             const data = await res.json();
             if (res.ok && data.tokenCreated) {
                 // Success Auth
-                console.log('Success Auth');
+                statusAuthStore('isAuth');
             } else {
                 //Not Auth
-                console.log('Not success Auth');
+                statusAuthStore('notIsAuth');
             }
         });
     }

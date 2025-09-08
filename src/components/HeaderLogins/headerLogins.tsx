@@ -2,10 +2,14 @@ import './style.scss';
 import { useSearchPopupStore } from '../../stores/searchUsers';
 import { useChoosenChatStore } from '../../stores/choosenChat';
 import { useWithWhoChatStore } from '../../stores/withWhoChat';
-
+import { useMessagesTreeStore } from '../../stores/messagesTree';
 function HeaderLoginsResult() {
     const choosenChatStatus = useChoosenChatStore(
         (state) => state.changeStatus
+    );
+
+    const insertMessagesTree = useMessagesTreeStore(
+        (state) => state.insertData
     );
 
     const changeWithWhoChatLogin = useWithWhoChatStore(
@@ -33,7 +37,7 @@ function HeaderLoginsResult() {
                 }),
             }).then(async (res) => {
                 const data = await res.json();
-                console.log(data);
+                insertMessagesTree(data.messages);
             });
         }
 

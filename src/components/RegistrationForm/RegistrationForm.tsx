@@ -11,10 +11,6 @@ export default function RegistrationForm() {
     const [errorLoginReg, setErrorLoginReg] = useState<StatusInput>('');
     const [errorPasswordReg, setErrorPasswordReg] = useState<StatusInput>('');
     const typeForm = useTypeFormStore((state) => state.changeTypeForm);
-    //
-    // const changeForm = () => {
-    //     setUserIsAuth(choosenUserOption === 'reg' ? 'login' : 'reg');
-    // };
 
     const resultValidate = (
         statusValidateLogin: boolean,
