@@ -2,12 +2,16 @@ import { useState } from 'react';
 import { useTypeFormStore } from '../../stores/typeForm';
 import { checkAuthUser } from './checkAuthUser';
 import { useStatusAuthStore } from '../../stores/statusAuth';
+import { useTriggerCheckAuthStore } from '../../stores/triggerCheckAuth';
 function LoginForm() {
     const statusAuth = useStatusAuthStore((state) => state.changeStatusAuth);
     const typeForm = useTypeFormStore((state) => state.changeTypeForm);
     const [inputLogin, setInputLogin] = useState<string>('');
     const [inputPassword, setInputPassword] = useState<string>('');
-
+    const changeTriggerAuth = useTriggerCheckAuthStore(
+        (state) => state.changeValue
+    );
+    const valueTriggerAuth = useTriggerCheckAuthStore((state) => state.value);
     return (
         <>
             <div className='form'>
@@ -30,7 +34,15 @@ function LoginForm() {
                         onChange={(e) => setInputPassword(e.target.value)}
                     />
                     <button
-                        onClick={() => checkAuthUser(inputLogin, inputPassword, statusAuth)}
+                        onClick={() =>
+                            checkAuthUser(
+                                inputLogin,
+                                inputPassword,
+                                statusAuth,
+                                changeTriggerAuth,
+                                valueTriggerAuth
+                            )
+                        }
                     >
                         Войти в аккаунт
                     </button>

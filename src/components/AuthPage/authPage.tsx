@@ -3,6 +3,7 @@ import './style.scss';
 import { usePopupRegStore } from '../../stores/popupReg';
 import { useTypeFormStore } from '../../stores/typeForm';
 import { useStatusAuthStore } from '../../stores/statusAuth';
+import { useTriggerCheckAuthStore } from '../../stores/triggerCheckAuth';
 import { LoginForm } from '../LoginForm/LoginForm';
 export default function AuthPage() {
     type TypesForm = 'reg' | 'login';
@@ -20,6 +21,19 @@ export default function AuthPage() {
         (state) => state.statusPopup
     );
 
+    const changeTriggerAuthStore = useTriggerCheckAuthStore(
+        (state) => state.changeValue
+    );
+
+    const valueTriggerAuthStore = useTriggerCheckAuthStore(
+        (state) => state.value
+    );
+
+    const getInChatApp = () => {
+        changeAuthStatus('isAuth');
+        changeTriggerAuthStore(valueTriggerAuthStore + 1);
+    };
+
     if (typeForm === 'reg')
         return (
             <>
@@ -29,9 +43,7 @@ export default function AuthPage() {
                             Вы успешно зарегистрировались!
                             <br /> Добро пожаловать в LifeApp
                         </p>
-                        <button onClick={() => changeAuthStatus('isAuth')}>
-                            Войти в чат
-                        </button>
+                        <button onClick={getInChatApp}>Войти в чат</button>
                     </div>
                 ) : null}
                 <div

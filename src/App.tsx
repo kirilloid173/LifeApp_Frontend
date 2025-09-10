@@ -1,22 +1,36 @@
 import Header from './components/Header/header';
 import EmptyLoadingPage from './components/EmptyLoadingPage/EmptyLoadingPage';
 import ErrorConnectionBackend from './components/ErrorConnectionBackend/ErrorConnectionBackend';
-import { useEffect, useState } from 'react';
-import { useStatusAuthStore } from './stores/statusAuth';
 import Chats from './components/Chats/chats';
 import AuthPage from './components/AuthPage/authPage';
+import { useEffect, useState } from 'react';
+import { useStatusAuthStore } from './stores/statusAuth';
 import { useLoginNameStore } from './stores/loginName';
+import { useTokenUserStore } from './stores/tokenUser';
+import { useTriggerCheckAuthStore } from './stores/triggerCheckAuth';
 
 function App() {
     type RolesAuth = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
+
     const statusAuth = useStatusAuthStore<RolesAuth>(
         (state) => state.statusAuth
     );
-    const [retryAgain, setRetryAgain] = useState<number>(0);
+
+    const changeTriggerAuthStore = useTriggerCheckAuthStore(
+        (state) => state.changeValue
+    );
+
+    const valueTriggerAuthStore = useTriggerCheckAuthStore(
+        (state) => state.value
+    );
+
     const changeStatusAuthStore = useStatusAuthStore(
         (state) => state.changeStatusAuth
     );
+
     const insertLoginName = useLoginNameStore((state) => state.changeLoginName);
+
+    const changeTokenUser = useTokenUserStore((state) => state.changeTokenUser);
     //
     useEffect(() => {
         fetch('api/checkAuthUser/', {
@@ -28,6 +42,8 @@ function App() {
                 if (data.statusAuth === true && res.ok && data.loginAuth) {
                     changeStatusAuthStore('isAuth');
                     insertLoginName(data.loginAuth);
+                    changeTokenUser(data.token);
+                    console.log('TEST MAN');
                     // User is auth
                 } else if (data.error === true || data.statusAuth === false) {
                     changeStatusAuthStore('notIsAuth');
@@ -38,12 +54,14 @@ function App() {
                 console.error('Connection is not available, error:', error);
                 changeStatusAuthStore('errorConnection');
             });
-    }, [retryAgain]);
+    }, [valueTriggerAuthStore]);
     //
     if (statusAuth === 'errorConnection') {
         return (
             <ErrorConnectionBackend
-                retryAgain={() => setRetryAgain((prev) => prev + 1)}
+                retryAgain={() =>
+                    changeTriggerAuthStore(valueTriggerAuthStore + 1)
+                }
             />
         );
     }

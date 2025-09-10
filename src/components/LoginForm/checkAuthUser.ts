@@ -5,9 +5,10 @@ type AuthStatus = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
 function checkAuthUser(
     loginInput: string,
     passwordInput: string,
-    statusAuthStore: (status: AuthStatus) => void
+    statusAuthStore: (status: AuthStatus) => void,
+    changeTriggerAuth: (newValue: number) => void,
+    valueTriggerAuth: number
 ): void {
-    console.log(typeof statusAuthStore);
     if (
         validateInput(loginInput, 'login') &&
         validateInput(passwordInput, 'password')
@@ -26,6 +27,7 @@ function checkAuthUser(
             if (res.ok && data.tokenCreated) {
                 // Success Auth
                 statusAuthStore('isAuth');
+                changeTriggerAuth(valueTriggerAuth + 1);
             } else {
                 //Not Auth
                 statusAuthStore('notIsAuth');
