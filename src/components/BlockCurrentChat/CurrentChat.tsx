@@ -17,8 +17,7 @@ export default function BlockCurrentChat() {
             `wss://localhost:3000?token=${tokenUserStore}`
         );
 
-        ws.onopen = () => console.log('Connection to backend is open');
-
+        ws.onopen = () => console.log('Websocket connection is open');
         return () => {
             if (ws.readyState === WebSocket.OPEN) {
                 ws.send(

@@ -20,30 +20,7 @@ export default function Header() {
 
     const loginName = useLoginNameStore((state) => state.loginName);
 
-    const changeLoginNameHeader = useLoginNameStore(
-        (state) => state.changeLoginName
-    );
-
     const [searchValue, setSearchValue] = useState<string>('');
-
-    useEffect(() => {
-        fetch('api/checkAuthUser/', {
-            method: 'GET',
-            credentials: 'include',
-        })
-            .then(async (res) => {
-                const data = await res.json();
-                if (data.statusAuth === true && res.ok && data.loginAuth) {
-                    changeLoginNameHeader(data.loginAuth);
-                }
-            })
-            .catch((error) => {
-                console.error('Connection is not available, error:', error);
-                changeStatusAuthStore('errorConnection');
-            });
-    }, []);
-
-    useEffect(() => {});
 
     useEffect(() => {
         const timeout = setTimeout(() => {

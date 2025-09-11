@@ -43,7 +43,6 @@ function App() {
                     changeStatusAuthStore('isAuth');
                     insertLoginName(data.loginAuth);
                     changeTokenUser(data.token);
-                    console.log('TEST MAN');
                     // User is auth
                 } else if (data.error === true || data.statusAuth === false) {
                     changeStatusAuthStore('notIsAuth');
