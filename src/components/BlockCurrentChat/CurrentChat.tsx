@@ -6,9 +6,11 @@ import { AskChooseChat } from '../AskChooseChat/askChooseChat';
 import './style.scss';
 import { useEffect } from 'react';
 import { useTokenUserStore } from '../../stores/tokenUser';
+import { useMessagesTreeStore } from '../../stores/messagesTree';
 
 export default function BlockCurrentChat() {
     const tokenUserStore = useTokenUserStore((state) => state.token);
+    const SetMessagesTree = useMessagesTreeStore((state) => state.insertData);
 
     useEffect(() => {
         if (!tokenUserStore) return;
@@ -16,7 +18,15 @@ export default function BlockCurrentChat() {
         const ws = new WebSocket(
             `wss://localhost:3000?token=${tokenUserStore}`
         );
-
+        ws.onmessage = (message) => {
+            const dataMessage = JSON.parse(message.data);
+            if (
+                dataMessage.type === 'update_messages' &&
+                dataMessage.messages.length
+            ) {
+                SetMessagesTree(dataMessage.messages);
+            }
+        };
         ws.onopen = () => console.log('Websocket connection is open');
         return () => {
             if (ws.readyState === WebSocket.OPEN) {
