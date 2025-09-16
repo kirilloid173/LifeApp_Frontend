@@ -1,8 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import './style.scss';
 import { useWithWhoChatStore } from '../../stores/withWhoChat';
 export default function WriteMessage() {
-    const messageText = useRef('');
+    const [messageText, changeMessageText] = useState('');
     const withWhoChat = useWithWhoChatStore((state) => state.withWhoChat);
     const sendMessage = () => {
         fetch('api/sendMessage', {
@@ -13,7 +13,7 @@ export default function WriteMessage() {
             },
             body: JSON.stringify({
                 withWhoChat: withWhoChat,
-                messageText: messageText.current,
+                messageText: messageText,
             }),
         });
     };
@@ -25,7 +25,7 @@ export default function WriteMessage() {
                     className='input-write-message'
                     id='input-write-message'
                     placeholder='Введите сообщение...'
-                    onChange={(e) => (messageText.current = e.target.value)}
+                    onChange={(e) => changeMessageText(e.target.value)}
                     maxLength={1000}
                 />
                 <button

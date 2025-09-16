@@ -5,6 +5,8 @@ import { useLoginNameStore } from '../../stores/loginName';
 import { useEffect, useState } from 'react';
 import { HeaderLoginsResult } from '../HeaderLogins/headerLogins';
 import { useSearchPopupStore } from '../../stores/searchUsers';
+import { useMessagesTreeStore } from '../../stores/messagesTree';
+import { useChoosenChatStore } from '../../stores/choosenChat';
 
 export default function Header() {
     const changePopupStatus = usePopupRegStore(
@@ -16,6 +18,14 @@ export default function Header() {
     );
     const changeResultUsers = useSearchPopupStore(
         (state) => state.changeResultUsers
+    );
+
+    const changeMessagesTree = useMessagesTreeStore(
+        (state) => state.insertData
+    );
+
+    const changeStatusChoosenChat = useChoosenChatStore(
+        (state) => state.changeStatus
     );
 
     const loginName = useLoginNameStore((state) => state.loginName);
@@ -40,9 +50,7 @@ export default function Header() {
                         return;
                     }
                     const data = await res.json();
-                    console.log(data.resultSearch);
                     if (res.ok && data.resultSearch.length) {
-                        console.log(data.resultSearch);
                         changeResultUsers(data.resultSearch);
                     }
                 });
@@ -63,6 +71,8 @@ export default function Header() {
             if (res.ok && data.statusDeleted) {
                 changeStatusAuthStore('notIsAuth');
                 changePopupStatus('turnOff');
+                changeMessagesTree([]);
+                changeStatusChoosenChat(false);
             }
         });
     };
