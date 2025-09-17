@@ -3,7 +3,7 @@ import { useMessagesTreeStore } from '../../stores/messagesTree';
 export default function Messages() {
     const messagesTree = useMessagesTreeStore((state) => state.tree);
     return (
-        <>
+        <div className='iframe-messages'>
             {messagesTree.map((message, index) => (
                 <div
                     className={`message ${
@@ -15,6 +15,6 @@ export default function Messages() {
                     <p>{message.message}</p>
                 </div>
             ))}
-        </>
+        </div>
     );
 }
