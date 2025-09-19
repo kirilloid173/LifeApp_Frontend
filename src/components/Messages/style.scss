@@ -7,6 +7,8 @@
     border-radius: 20px;
     border: none;
     height: max-content;
+    letter-spacing: 1px;
+    word-spacing: 1px;
     &.message-in {
         background-color: $primary-color-background-current-chats-in;
     }
