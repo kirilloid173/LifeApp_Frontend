@@ -3,12 +3,13 @@ import EmptyLoadingPage from './components/EmptyLoadingPage/EmptyLoadingPage';
 import ErrorConnectionBackend from './components/ErrorConnectionBackend/ErrorConnectionBackend';
 import Chats from './components/Chats/chats';
 import AuthPage from './components/AuthPage/authPage';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useStatusAuthStore } from './stores/statusAuth';
 import { useLoginNameStore } from './stores/loginName';
 import { useTokenUserStore } from './stores/tokenUser';
 import { useTriggerCheckAuthStore } from './stores/triggerCheckAuth';
-
+import { useMessagesTreeStore } from './stores/messagesTree';
+import { useSocketChannelStore } from './stores/socketChannel';
 function App() {
     type RolesAuth = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
 
@@ -30,8 +31,53 @@ function App() {
 
     const insertLoginName = useLoginNameStore((state) => state.changeLoginName);
 
-    const changeTokenUser = useTokenUserStore((state) => state.changeTokenUser);
+    const tokenUserStore = useTokenUserStore((state) => state.token);
+    const changeTokenUserStore = useTokenUserStore(
+        (state) => state.changeTokenUser
+    );
+
+    const SetMessagesTree = useMessagesTreeStore((state) => state.insertData);
+
+    const ChangeSocketChannelStatus = useSocketChannelStore(
+        (state) => state.changeStatus
+    );
+    const socketChannelStatus = useSocketChannelStore((state) => state.status);
     //
+
+    useEffect(() => {
+        if (!tokenUserStore) return;
+
+        const ws = new WebSocket(
+            `wss://localhost:3000?token=${tokenUserStore}`
+        );
+        ws.onmessage = (message) => {
+            const dataMessage = JSON.parse(message.data);
+            if (
+                dataMessage.type === 'update_messages' &&
+                dataMessage.messages.length
+            ) {
+                SetMessagesTree(dataMessage.messages);
+            }
+        };
+        ws.onopen = () => console.log('Websocket connection is open');
+        return () => {
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(
+                    JSON.stringify({
+                        type: 'unmount_component',
+                        tokenUser: tokenUserStore,
+                    })
+                );
+                ws.close(1000, 'unmount component');
+            }
+        };
+    }, [
+        socketChannelStatus,
+        ChangeSocketChannelStatus,
+        SetMessagesTree,
+        tokenUserStore,
+    ]);
+
     useEffect(() => {
         fetch('api/checkAuthUser/', {
             method: 'GET',
@@ -42,10 +88,12 @@ function App() {
                 if (data.statusAuth === true && res.ok && data.loginAuth) {
                     changeStatusAuthStore('isAuth');
                     insertLoginName(data.loginAuth);
-                    changeTokenUser(data.token);
+                    changeTokenUserStore(data.token);
+                    ChangeSocketChannelStatus(true);
                     // User is auth
                 } else if (data.error === true || data.statusAuth === false) {
                     changeStatusAuthStore('notIsAuth');
+                    ChangeSocketChannelStatus(false);
                     // User is not auth
                 }
             })
