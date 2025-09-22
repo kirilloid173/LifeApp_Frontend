@@ -3,6 +3,8 @@ import { useSearchPopupStore } from '../../stores/searchUsers';
 import { useChoosenChatStore } from '../../stores/choosenChat';
 import { useWithWhoChatStore } from '../../stores/withWhoChat';
 import { useMessagesTreeStore } from '../../stores/messagesTree';
+import { useStatusOnlineUserStore } from '../../stores/statusOnlineUser';
+
 function HeaderLoginsResult() {
     const choosenChatStatus = useChoosenChatStore(
         (state) => state.changeStatus
@@ -17,9 +19,15 @@ function HeaderLoginsResult() {
     );
 
     const resultUsers = useSearchPopupStore((state) => state.resultUsers);
+
     const changeSearchPopupStatus = useSearchPopupStore(
         (state) => state.changeResultUsers
     );
+
+    const changeStatusOnlineUser = useStatusOnlineUserStore(
+        (state) => state.changeStatus
+    );
+
     const userChoosen = (loginUser?: string) => {
         if (!loginUser || !loginUser.length) {
             return;
@@ -38,6 +46,7 @@ function HeaderLoginsResult() {
             }).then(async (res) => {
                 const data = await res.json();
                 insertMessagesTree(data.messages);
+                changeStatusOnlineUser(data.status_online_user);
             });
         }
 
