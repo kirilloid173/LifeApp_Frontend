@@ -3,10 +3,8 @@
 .block-write-messages {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    bottom: calc(0% + 150px);
     width: 100%;
-
+    margin-top: 15px;
     textarea.block-write-messages__textarea {
         font-size: 20px;
         border-radius: 20px;
