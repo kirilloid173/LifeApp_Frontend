@@ -1,11 +1,13 @@
 import './style.scss';
-
+import { useActiveChatsTreeStore } from '../../stores/activeChatsTree';
 export default function OtherChatLeft() {
-    return (
-        <div className='otherChatLeft'>
-            <p className='otherChatLeft__nameChat'>User</p>
-            <p className='otherChatLeftt__contentChat'>Content text are is</p>
-            <p className='otherChatLeft__dataChat'>Data</p>
+    const activeChatsTree = useActiveChatsTreeStore((state) => state.tree);
+
+    return activeChatsTree.map((chat, index) => (
+        <div className='other-chat-left' key={index}>
+            <p className='other-chat-left__name-chat'>{chat.login}</p>
+            <p className='other-chat-left__content-chat'>{chat.message}</p>
+            <p className='other-chat-left__data-chat'>{chat.date_time}</p>
         </div>
-    );
+    ));
 }

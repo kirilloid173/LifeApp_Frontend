@@ -10,6 +10,8 @@ import { useTokenUserStore } from './stores/tokenUser';
 import { useTriggerCheckAuthStore } from './stores/triggerCheckAuth';
 import { useMessagesTreeStore } from './stores/messagesTree';
 import { useSocketChannelStore } from './stores/socketChannel';
+import { useActiveChatsTreeStore } from './stores/activeChatsTree';
+
 function App() {
     type RolesAuth = 'unknown' | 'isAuth' | 'notIsAuth' | 'errorConnection';
 
@@ -41,8 +43,24 @@ function App() {
     const ChangeSocketChannelStatus = useSocketChannelStore(
         (state) => state.changeStatus
     );
+
+    const changeActiveChatsTree = useActiveChatsTreeStore(
+        (state) => state.changeTree
+    );
+
     const socketChannelStatus = useSocketChannelStore((state) => state.status);
     //
+    const getActiveUserChats = () => {
+        fetch('api/getActiveUserChats/', {
+            method: 'GET',
+            credentials: 'include',
+        }).then(async (res) => {
+            const resultRequest = await res.json();
+            if (!resultRequest.error && res.ok) {
+                changeActiveChatsTree(resultRequest.tree_active_chats);
+            }
+        });
+    };
 
     useEffect(() => {
         if (!tokenUserStore) return;
@@ -90,6 +108,7 @@ function App() {
                     insertLoginName(data.loginAuth);
                     changeTokenUserStore(data.token);
                     ChangeSocketChannelStatus(true);
+                    getActiveUserChats();
                     // User is auth
                 } else if (data.error === true || data.statusAuth === false) {
                     changeStatusAuthStore('notIsAuth');
