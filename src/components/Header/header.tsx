@@ -7,7 +7,7 @@ import { HeaderLoginsResult } from '../HeaderLogins/headerLogins';
 import { useSearchPopupStore } from '../../stores/searchUsers';
 import { useMessagesTreeStore } from '../../stores/messagesTree';
 import { useChoosenChatStore } from '../../stores/choosenChat';
-
+import { useActiveChatsTreeStore } from '../../stores/activeChatsTree';
 export default function Header() {
     const changePopupStatus = usePopupRegStore(
         (state) => state.changeStatusPopup
@@ -26,6 +26,10 @@ export default function Header() {
 
     const changeStatusChoosenChat = useChoosenChatStore(
         (state) => state.changeStatus
+    );
+
+    const changeActiveChatsTree = useActiveChatsTreeStore(
+        (state) => state.changeTree
     );
 
     const loginName = useLoginNameStore((state) => state.loginName);
@@ -73,6 +77,7 @@ export default function Header() {
                 changePopupStatus('turnOff');
                 changeMessagesTree([]);
                 changeStatusChoosenChat(false);
+                changeActiveChatsTree([]);
             }
         });
     };

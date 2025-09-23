@@ -47,12 +47,11 @@ function HeaderLoginsResult() {
                 const data = await res.json();
                 insertMessagesTree(data.messages);
                 changeStatusOnlineUser(data.status_online_user);
+                choosenChatStatus(true);
+                changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
+                changeWithWhoChatLogin(loginUser);
             });
         }
-
-        choosenChatStatus(true);
-        changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
-        changeWithWhoChatLogin(loginUser);
     };
 
     return (

@@ -9,4 +9,16 @@
     padding: 10px;
     margin: 25px 0;
     color: $primary-color-font;
+
+    &:hover {
+        cursor: pointer;
+        border: 2px solid $primary-color-left-chats-border;
+    }
+}
+
+p[class='warning-empty-chats-text'] {
+    font-size: 20px;
+    color: $primary-color-font;
+    position: absolute;
+    top: 49%;
 }
