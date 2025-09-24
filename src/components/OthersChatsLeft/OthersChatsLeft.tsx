@@ -62,9 +62,15 @@ export default function OtherChatLeft() {
                 className='other-chat-left'
                 key={index}
             >
-                <p className='other-chat-left__name-chat'>{chat.login}</p>
-                <p className='other-chat-left__content-chat'>{chat.message}</p>
-                <p className='other-chat-left__data-chat'>{chat.date_time}</p>
+                <p className='other-chat-left__name-chat'>
+                    Чат с: {chat.login}
+                </p>
+                <p className='other-chat-left__content-chat'>
+                    Сообщение: {chat.message}
+                </p>
+                <p className='other-chat-left__data-chat'>
+                    Дата: {chat.date_time}
+                </p>
             </div>
         ))
     );
