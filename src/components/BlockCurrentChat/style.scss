@@ -3,7 +3,7 @@
 .block-current-chat {
     width: 70%;
     margin: 25px 100px;
-    height: 100vh;
+    height: calc(100vh - 140px);
     position: relative;
     background-color: $primary-color-background;
     color: $primary-color-font;
