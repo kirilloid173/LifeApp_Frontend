@@ -58,6 +58,8 @@ function App() {
             const resultRequest = await res.json();
             if (!resultRequest.error && res.ok) {
                 changeActiveChatsTree(resultRequest.tree_active_chats);
+            } else if (resultRequest.error === 'uncorrect_token') {
+                changeStatusAuthStore('notIsAuth');
             }
         });
     };
