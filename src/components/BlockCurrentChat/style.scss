@@ -1,8 +1,6 @@
 @use '/src/utils/SASS/variables' as *;
 
 .block-current-chat {
-    width: 70%;
-    margin: 25px 100px 25px 10px;
     height: calc(100vh - 140px);
     background-color: $primary-color-background;
     color: $primary-color-font;
@@ -12,12 +10,26 @@
 
 @media (max-width: 760px) {
     .block-current-chat {
-        position: block;
+        position: static;
     }
 }
 
 @media (min-width: 760px) {
     .block-current-chat {
         position: relative;
+    }
+}
+
+@media (max-width: 580px) {
+    .block-current-chat {
+        margin: 25px 10px;
+        width: 90vw;
+    }
+}
+
+@media (min-width: 580px) {
+    .block-current-chat {
+        margin: 25px 100px 25px 10px;
+        width: 70%;
     }
 }

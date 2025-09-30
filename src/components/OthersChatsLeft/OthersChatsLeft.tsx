@@ -65,14 +65,14 @@ export default function OtherChatLeft() {
             choosenChatStatus(true);
             changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
             changeWithWhoChatLogin(loginSecondUser);
-            setIsMobileViewport(true);
+            setIsMobileViewport(window.innerWidth < 800);
         });
     };
-    return activeChatsTree.length === 0 ? (
+    return isMobileViewport === true ? null : activeChatsTree.length === 0 ? (
         <p className='warning-empty-chats-text'>
             {!valueChoosenChatStatus ? 'Ваш список чатов пуст' : ''}
         </p>
-    ) : isMobileViewport === true ? null : (
+    ) : (
         activeChatsTree.map((chat, index) => (
             <div
                 onClick={() => getChatData(chat.login)}
