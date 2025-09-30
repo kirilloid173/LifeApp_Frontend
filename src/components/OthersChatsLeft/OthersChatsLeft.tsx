@@ -5,6 +5,7 @@ import { useChoosenChatStore } from '../../stores/choosenChat';
 import { useWithWhoChatStore } from '../../stores/withWhoChat';
 import { useMessagesTreeStore } from '../../stores/messagesTree';
 import { useStatusOnlineUserStore } from '../../stores/statusOnlineUser';
+import { useEffect, useState } from 'react';
 
 export default function OtherChatLeft() {
     const activeChatsTree = useActiveChatsTreeStore((state) => state.tree);
@@ -32,6 +33,21 @@ export default function OtherChatLeft() {
         (state) => state.changeStatus
     );
 
+    const [isMobileViewport, setIsMobileViewport] = useState(
+        window.innerWidth < 800 && valueChoosenChatStatus
+    );
+
+    useEffect(() => {
+        const checkViewport = () => {
+            if (valueChoosenChatStatus) {
+                setIsMobileViewport(
+                    window.innerWidth < 800 && valueChoosenChatStatus
+                );
+            }
+        };
+        window.addEventListener('resize', checkViewport);
+    }, [valueChoosenChatStatus]);
+
     const getChatData = (loginSecondUser: string) => {
         fetch('api/getChatIdAndMessages', {
             method: 'POST',
@@ -49,13 +65,14 @@ export default function OtherChatLeft() {
             choosenChatStatus(true);
             changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
             changeWithWhoChatLogin(loginSecondUser);
+            setIsMobileViewport(true);
         });
     };
     return activeChatsTree.length === 0 ? (
         <p className='warning-empty-chats-text'>
             {!valueChoosenChatStatus ? 'Ваш список чатов пуст' : ''}
         </p>
-    ) : (
+    ) : isMobileViewport === true ? null : (
         activeChatsTree.map((chat, index) => (
             <div
                 onClick={() => getChatData(chat.login)}
