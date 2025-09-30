@@ -50,18 +50,14 @@ function HeaderLoginsResult() {
                 }),
             }).then(async (res) => {
                 const data = await res.json();
-                if (
-                    data.ok &&
-                    !data.error &&
-                    data.message.length &&
-                    data.status_online_user
-                )
+                if (res.ok && !data.error && data.messages) {
                     insertMessagesTree(data.messages);
-                changeStatusOnlineUser(data.status_online_user);
-                choosenChatStatus(true);
-                changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
-                changeWithWhoChatLogin(loginUser);
-                changeStatusMobileMenu(false);
+                    changeStatusOnlineUser(data.status_online_user);
+                    choosenChatStatus(true);
+                    changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
+                    changeWithWhoChatLogin(loginUser);
+                    changeStatusMobileMenu(false);
+                }
             });
         }
     };

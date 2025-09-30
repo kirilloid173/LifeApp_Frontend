@@ -60,12 +60,14 @@ export default function OtherChatLeft() {
             }),
         }).then(async (res) => {
             const data = await res.json();
-            insertMessagesTree(data.messages);
-            changeStatusOnlineUser(data.status_online_user);
-            choosenChatStatus(true);
-            changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
-            changeWithWhoChatLogin(loginSecondUser);
-            setIsMobileViewport(window.innerWidth < 800);
+            if (res.ok && !data.error && data.messages) {
+                insertMessagesTree(data.messages);
+                changeStatusOnlineUser(data.status_online_user);
+                choosenChatStatus(true);
+                changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
+                changeWithWhoChatLogin(loginSecondUser);
+                setIsMobileViewport(window.innerWidth < 800);
+            }
         });
     };
     return isMobileViewport === true ? null : activeChatsTree.length === 0 ? (
