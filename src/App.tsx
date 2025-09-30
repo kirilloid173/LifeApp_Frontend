@@ -57,6 +57,29 @@ function App() {
         }).then(async (res) => {
             const resultRequest = await res.json();
             if (!resultRequest.error && res.ok) {
+                for (
+                    let i = 0;
+                    i < resultRequest.tree_active_chats.length;
+                    i++
+                ) {
+                    if (
+                        resultRequest.tree_active_chats[i].message.length >= 15
+                    ) {
+                        resultRequest.tree_active_chats[i].message =
+                            resultRequest.tree_active_chats[i].message.slice(
+                                0,
+                                15
+                            ) + '...';
+                    } else if (
+                        resultRequest.tree_active_chats[i].message.length < 15
+                    ) {
+                        resultRequest.tree_active_chats[i].message =
+                            resultRequest.tree_active_chats[i].message.slice(
+                                0,
+                                15
+                            );
+                    }
+                }
                 changeActiveChatsTree(resultRequest.tree_active_chats);
             } else if (resultRequest.error === 'uncorrect_token') {
                 changeStatusAuthStore('notIsAuth');
