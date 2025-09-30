@@ -4,6 +4,7 @@ import { useChoosenChatStore } from '../../stores/choosenChat';
 import { useWithWhoChatStore } from '../../stores/withWhoChat';
 import { useMessagesTreeStore } from '../../stores/messagesTree';
 import { useStatusOnlineUserStore } from '../../stores/statusOnlineUser';
+import { useStatusMobileMenuStore } from '../../stores/mobileMenu';
 
 function HeaderLoginsResult() {
     const choosenChatStatus = useChoosenChatStore(
@@ -28,6 +29,10 @@ function HeaderLoginsResult() {
         (state) => state.changeStatus
     );
 
+    const changeStatusMobileMenu = useStatusMobileMenuStore(
+        (state) => state.changeStatus
+    );
+
     const userChoosen = (loginUser?: string) => {
         if (!loginUser || !loginUser.length) {
             return;
@@ -45,11 +50,18 @@ function HeaderLoginsResult() {
                 }),
             }).then(async (res) => {
                 const data = await res.json();
-                insertMessagesTree(data.messages);
+                if (
+                    data.ok &&
+                    !data.error &&
+                    data.message.length &&
+                    data.status_online_user
+                )
+                    insertMessagesTree(data.messages);
                 changeStatusOnlineUser(data.status_online_user);
                 choosenChatStatus(true);
                 changeSearchPopupStatus([{ defaultValue: 'searchEmpty' }]); // Remove search popup
                 changeWithWhoChatLogin(loginUser);
+                changeStatusMobileMenu(false);
             });
         }
     };

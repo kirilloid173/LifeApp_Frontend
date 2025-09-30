@@ -8,6 +8,8 @@ import { useSearchPopupStore } from '../../stores/searchUsers';
 import { useMessagesTreeStore } from '../../stores/messagesTree';
 import { useChoosenChatStore } from '../../stores/choosenChat';
 import { useActiveChatsTreeStore } from '../../stores/activeChatsTree';
+import { useStatusMobileMenuStore } from '../../stores/mobileMenu';
+
 export default function Header() {
     const changePopupStatus = usePopupRegStore(
         (state) => state.changeStatusPopup
@@ -35,6 +37,12 @@ export default function Header() {
     const loginName = useLoginNameStore((state) => state.loginName);
 
     const [searchValue, setSearchValue] = useState<string>('');
+
+    const statusMobileMenu = useStatusMobileMenuStore((state) => state.status);
+
+    const changeStatusMobileMenu = useStatusMobileMenuStore(
+        (state) => state.changeStatus
+    );
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -78,15 +86,20 @@ export default function Header() {
                 changeMessagesTree([]);
                 changeStatusChoosenChat(false);
                 changeActiveChatsTree([]);
+                changeStatusMobileMenu(false);
             }
         });
+    };
+
+    const showMobileMenu = () => {
+        changeStatusMobileMenu(!statusMobileMenu);
     };
     return (
         <div className='header'>
             <div className='header__inner-block'>
                 <h1 className='header__name-app'>LifeApp</h1>
             </div>
-            <div className='header__outter-block'>
+            <div className='header__outter-block header__outter-block--desktop'>
                 <div className='outter-block__form-logins-result'>
                     <input
                         type='text'
@@ -102,6 +115,33 @@ export default function Header() {
                 <p className='header__exit' onClick={() => removeAuthUser()}>
                     Выйти
                 </p>
+            </div>
+            <div className='header__outter-block header__outter-block--mobile'>
+                <p onClick={() => showMobileMenu()}>Меню</p>
+                <div className='header__outter-block__inner-mobile-block'>
+                    {statusMobileMenu ? (
+                        <div className='header__outter-block--mobile-list'>
+                            <input
+                                type='text'
+                                className='header__search-user'
+                                placeholder='Поиск пользователя'
+                                defaultValue=''
+                                onChange={(e) => setSearchValue(e.target.value)}
+                                maxLength={20}
+                            />
+                            <HeaderLoginsResult />
+                            <p>Здравствуйте {loginName}</p>
+                            <p
+                                className='header__exit'
+                                onClick={() => removeAuthUser()}
+                            >
+                                Выйти
+                            </p>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                </div>
             </div>
         </div>
     );

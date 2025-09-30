@@ -8,14 +8,14 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
     &__outter-block {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 50px;
 
-        p[class='header__exit']:hover {
+        p.header__exit:hover {
             text-decoration: underline;
             cursor: pointer;
         }
@@ -24,14 +24,64 @@
             display: flex;
             flex-direction: column;
         }
+
+        &__inner-mobile-block {
+            position: relative;
+        }
+
+        &--mobile-list {
+            background-color: $primary-color-background-mobile-menu;
+            padding: 20px;
+            border: none;
+            text-align: center;
+            z-index: 20;
+            position: absolute;
+            transform: translateX(-50%);
+            p {
+                padding: 10px 0;
+            }
+        }
     }
 
-    input[class='header__search-user'] {
+    input.header__search-user {
         padding: 10px;
         border-radius: 20px;
         border: none;
         background-color: $primary-color-background-current-chats-in;
         color: white;
         font-size: 14px;
+    }
+
+    .header__name-app {
+        margin-right: 20px;
+    }
+
+    .header__outter-block--mobile {
+        flex-direction: column;
+        gap: 0;
+        margin-right: 60px;
+    }
+
+    .header__outter-block--desktop {
+        gap: 50px;
+    }
+}
+
+@media (max-width: 670px) {
+    .header__outter-block--mobile {
+        display: flex;
+    }
+    .header__outter-block--desktop {
+        display: none;
+    }
+}
+
+@media (min-width: 670px) {
+    .header__outter-block--mobile {
+        display: none;
+    }
+
+    .header__outter-block--desktop {
+        display: flex;
     }
 }
