@@ -6,6 +6,10 @@
     color: $primary-color-font;
     display: flex;
     flex-direction: column;
+
+    & > :last-child {
+        margin-top: auto;
+    }
 }
 
 @media (max-width: 760px) {
