@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 export default function OtherChatLeft() {
     const activeChatsTree = useActiveChatsTreeStore((state) => state.tree);
+
     const choosenChatStatus = useChoosenChatStore(
         (state) => state.changeStatus
     );
@@ -60,6 +61,7 @@ export default function OtherChatLeft() {
             }),
         }).then(async (res) => {
             const data = await res.json();
+
             if (data.messages) {
                 insertMessagesTree(data.messages);
                 changeStatusOnlineUser(data.status_online_user);
@@ -70,6 +72,7 @@ export default function OtherChatLeft() {
             }
         });
     };
+
     return isMobileViewport === true ? null : activeChatsTree.length === 0 ? (
         <p className='warning-empty-chats-text'>
             {!valueChoosenChatStatus ? 'Ваш список чатов пуст' : ''}

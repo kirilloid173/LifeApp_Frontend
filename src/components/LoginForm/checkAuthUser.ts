@@ -24,6 +24,7 @@ function checkAuthUser(
             }),
         }).then(async (res) => {
             const data = await res.json();
+
             if (res.ok && data.tokenCreated) {
                 // Success Auth
                 statusAuthStore('isAuth');

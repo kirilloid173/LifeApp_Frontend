@@ -8,9 +8,11 @@
     height: max-content;
     letter-spacing: 1px;
     word-spacing: 1px;
+
     &.message-in {
         background-color: $primary-color-background-current-chats-in;
     }
+
     &.message-out {
         background-color: $primary-color-background-current-chats-out;
         margin-left: auto;
@@ -25,6 +27,7 @@
     -ms-overflow-style: none;
     max-height: 60vh;
     margin-bottom: 20px;
+
     &::-webkit-scrollbar {
         display: none;
     }

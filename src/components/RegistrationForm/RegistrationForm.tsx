@@ -1,15 +1,20 @@
-import { useState } from 'react';
 import './style.scss';
 import validateInput from '../../lib/validate';
 import sendDataToBackend from './sendDataToBackend';
+import { useState } from 'react';
 import { useTypeFormStore } from '../../stores/typeForm';
+
 export default function RegistrationForm() {
     type StatusInput = 'error' | '';
 
     const [inputLoginReg, setInputLoginReg] = useState<string>('');
+
     const [inputPasswordReg, setInputPasswordReg] = useState<string>('');
+
     const [errorLoginReg, setErrorLoginReg] = useState<StatusInput>('');
+
     const [errorPasswordReg, setErrorPasswordReg] = useState<StatusInput>('');
+
     const typeForm = useTypeFormStore((state) => state.changeTypeForm);
 
     const resultValidate = (
@@ -18,7 +23,7 @@ export default function RegistrationForm() {
         loginInput: string,
         passwordInput: string
     ) => {
-        //Block UI Errors
+        // Blocks UI Errors
         if (statusValidateLogin) setErrorLoginReg('');
         if (statusValidatePassword) setErrorLoginReg('');
 
@@ -27,7 +32,7 @@ export default function RegistrationForm() {
 
         if (!statusValidatePassword) setErrorPasswordReg('error');
         else setErrorPasswordReg('');
-        // Block UI Errors
+        // Blocks UI Errors
 
         if (statusValidateLogin && statusValidatePassword)
             sendDataToBackend(
@@ -76,22 +81,13 @@ export default function RegistrationForm() {
                 >
                     Зарегистрироваться
                 </button>
-
-                {/* <p className='form__description-form-reg'>
-                    Любой набор латинский букв или цифр
-                </p> */}
             </div>
-
             <p
                 className='form__little-description-form'
                 onClick={() => typeForm('login')}
             >
                 Уже зарегистрированы?
             </p>
-
-            {/* <p className='form__little-description-form'>
-                Ещё не зарегистрированы?
-            </p> */}
         </div>
     );
 }

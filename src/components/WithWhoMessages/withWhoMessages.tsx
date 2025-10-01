@@ -1,6 +1,7 @@
-import { useWithWhoChatStore } from '../../stores/withWhoChat';
 import './style.scss';
+import { useWithWhoChatStore } from '../../stores/withWhoChat';
 import { useStatusOnlineUserStore } from '../../stores/statusOnlineUser';
+
 function WithWhoMessages() {
     const statusOnlineUser = useStatusOnlineUserStore((state) => state.status);
 

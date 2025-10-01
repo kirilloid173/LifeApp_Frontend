@@ -8,6 +8,7 @@ function sendDataToBackend(
 ) {
     if (statusValidateLogin && statusValidatePassword) {
         const { changeStatusPopup } = usePopupRegStore.getState();
+
         fetch('api/regNewUser', {
             method: 'POST',
             credentials: 'include',

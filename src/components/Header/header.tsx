@@ -18,6 +18,7 @@ export default function Header() {
     const changeStatusAuthStore = useStatusAuthStore(
         (state) => state.changeStatusAuth
     );
+
     const changeResultUsers = useSearchPopupStore(
         (state) => state.changeResultUsers
     );
@@ -94,6 +95,7 @@ export default function Header() {
     const showMobileMenu = () => {
         changeStatusMobileMenu(!statusMobileMenu);
     };
+
     return (
         <div className='header'>
             <div className='header__inner-block'>

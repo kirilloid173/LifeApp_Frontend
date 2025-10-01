@@ -1,9 +1,9 @@
+import './style.scss';
 import Messages from '../Messages/Messages';
 import WriteMessage from '../WriteMessage/WriteMessage';
 import { WithWhoMessages } from '../WithWhoMessages/withWhoMessages';
 import { useChoosenChatStore } from '../../stores/choosenChat';
 import { AskChooseChat } from '../AskChooseChat/askChooseChat';
-import './style.scss';
 
 export default function BlockCurrentChat() {
     const choosenChatStatus = useChoosenChatStore((state) => state.choosen);

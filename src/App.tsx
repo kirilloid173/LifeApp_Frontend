@@ -34,6 +34,7 @@ function App() {
     const insertLoginName = useLoginNameStore((state) => state.changeLoginName);
 
     const tokenUserStore = useTokenUserStore((state) => state.token);
+
     const changeTokenUserStore = useTokenUserStore(
         (state) => state.changeTokenUser
     );
@@ -49,13 +50,14 @@ function App() {
     );
 
     const socketChannelStatus = useSocketChannelStore((state) => state.status);
-    //
+
     const getActiveUserChats = () => {
         fetch('api/getActiveUserChats/', {
             method: 'GET',
             credentials: 'include',
         }).then(async (res) => {
             const resultRequest = await res.json();
+
             if (!resultRequest.error && res.ok) {
                 for (
                     let i = 0;
@@ -80,6 +82,7 @@ function App() {
                             );
                     }
                 }
+
                 changeActiveChatsTree(resultRequest.tree_active_chats);
             } else if (resultRequest.error === 'uncorrect_token') {
                 changeStatusAuthStore('notIsAuth');
@@ -93,6 +96,7 @@ function App() {
         const ws = new WebSocket(
             `wss://localhost:3000?token=${tokenUserStore}`
         );
+
         ws.onmessage = (message) => {
             const dataMessage = JSON.parse(message.data);
             if (
@@ -102,7 +106,9 @@ function App() {
                 SetMessagesTree(dataMessage.messages);
             }
         };
+
         ws.onopen = () => console.log('Websocket connection is open');
+
         return () => {
             if (ws.readyState === WebSocket.OPEN) {
                 ws.send(
@@ -114,12 +120,7 @@ function App() {
                 ws.close(1000, 'unmount component');
             }
         };
-    }, [
-        socketChannelStatus,
-        ChangeSocketChannelStatus,
-        SetMessagesTree,
-        tokenUserStore,
-    ]);
+    }, [socketChannelStatus, tokenUserStore]);
 
     useEffect(() => {
         fetch('api/checkAuthUser/', {
@@ -128,6 +129,7 @@ function App() {
         })
             .then(async (res) => {
                 const data = await res.json();
+
                 if (data.statusAuth === true && res.ok && data.loginAuth) {
                     changeStatusAuthStore('isAuth');
                     insertLoginName(data.loginAuth);
@@ -146,7 +148,7 @@ function App() {
                 changeStatusAuthStore('errorConnection');
             });
     }, [valueTriggerAuthStore]);
-    //
+
     if (statusAuth === 'errorConnection') {
         return (
             <ErrorConnectionBackend

@@ -1,10 +1,11 @@
-import BlockOtherChats from '../BlockOthersChats/BlockOthersChats';
 import './style.scss';
+import BlockOtherChats from '../BlockOthersChats/BlockOthersChats';
 import { useChoosenChatStore } from '../../stores/choosenChat';
 import { useEffect, useState } from 'react';
 
 export default function OthersChats() {
     const statusChoosenChat = useChoosenChatStore((state) => state.choosen);
+
     const [isSmallMobileViewport, changeIsSmallMobileViewport] = useState(
         window.innerWidth < 580 && statusChoosenChat
     );

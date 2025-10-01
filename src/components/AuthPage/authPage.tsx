@@ -5,8 +5,10 @@ import { useTypeFormStore } from '../../stores/typeForm';
 import { useStatusAuthStore } from '../../stores/statusAuth';
 import { useTriggerCheckAuthStore } from '../../stores/triggerCheckAuth';
 import { LoginForm } from '../LoginForm/LoginForm';
+
 export default function AuthPage() {
     type TypesForm = 'reg' | 'login';
+
     type PopupStatus =
         | 'cannotConnectBackend'
         | 'UserIsExist'
@@ -16,7 +18,9 @@ export default function AuthPage() {
     const changeAuthStatus = useStatusAuthStore(
         (state) => state.changeStatusAuth
     );
+
     const typeForm = useTypeFormStore<TypesForm>((state) => state.typeForm);
+
     const statusPopup = usePopupRegStore<PopupStatus>(
         (state) => state.statusPopup
     );
@@ -51,7 +55,6 @@ export default function AuthPage() {
                         statusPopup !== 'turnOff' ? 'reg-page__dark' : ''
                     }`}
                 >
-                    {/*  */}
                     <RegistrationForm />
                 </div>
             </>
