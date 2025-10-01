@@ -33,7 +33,7 @@ function HeaderLoginsResult() {
         (state) => state.changeStatus
     );
 
-    const userChoosen = (loginUser?: string) => {
+    const userChoosen = (loginUser: string = '') => {
         if (!loginUser || !loginUser.length) {
             return;
         }
