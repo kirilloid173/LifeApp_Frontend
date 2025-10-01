@@ -60,7 +60,7 @@ export default function OtherChatLeft() {
             }),
         }).then(async (res) => {
             const data = await res.json();
-            if (res.ok && !data.error && data.messages) {
+            if (data.messages) {
                 insertMessagesTree(data.messages);
                 changeStatusOnlineUser(data.status_online_user);
                 choosenChatStatus(true);
