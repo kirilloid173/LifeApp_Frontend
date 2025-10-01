@@ -3,12 +3,12 @@
 .other-chat-left {
     background-color: $primary-color-left-side;
     border-radius: 20px;
-    border: none;
     width: 250px;
     height: 60px;
     padding: 20px;
     margin: 25px 0;
     color: $primary-color-font;
+    border: 2px solid transparent;
 
     &:hover {
         cursor: pointer;
