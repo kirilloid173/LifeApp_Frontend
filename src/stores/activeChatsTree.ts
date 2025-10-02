@@ -13,7 +13,7 @@ interface ActiveChatsTree {
 
 const useActiveChatsTreeStore = create<ActiveChatsTree>((set) => ({
     tree: [],
-    changeTree: (changeTree) =>{ console.log(changeTree); set({ tree: changeTree })},
+    changeTree: (changeTree) => set({ tree: changeTree }),
 }));
 
 export { useActiveChatsTreeStore };

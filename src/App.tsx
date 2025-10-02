@@ -93,9 +93,7 @@ function App() {
     useEffect(() => {
         if (!tokenUserStore) return;
 
-        const ws = new WebSocket(
-            `wss://localhost:3000?token=${tokenUserStore}`
-        );
+        const ws = new WebSocket(`ws://localhost:3000?token=${tokenUserStore}`);
 
         ws.onmessage = (message) => {
             const dataMessage = JSON.parse(message.data);
@@ -106,8 +104,6 @@ function App() {
                 SetMessagesTree(dataMessage.messages);
             }
         };
-
-        ws.onopen = () => console.log('Websocket connection is open');
 
         return () => {
             if (ws.readyState === WebSocket.OPEN) {
