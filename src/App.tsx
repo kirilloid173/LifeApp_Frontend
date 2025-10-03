@@ -93,7 +93,11 @@ function App() {
     useEffect(() => {
         if (!tokenUserStore) return;
 
-        const ws = new WebSocket(`ws://localhost:3000?token=${tokenUserStore}`);
+        const ws = new WebSocket(
+            `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${
+                window.location.host
+            }/ws?token=${tokenUserStore}`
+        );
 
         ws.onmessage = (message) => {
             const dataMessage = JSON.parse(message.data);
