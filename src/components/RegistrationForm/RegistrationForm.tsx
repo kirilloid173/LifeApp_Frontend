@@ -3,6 +3,7 @@ import validateInput from '../../lib/validate';
 import sendDataToBackend from './sendDataToBackend';
 import { useState } from 'react';
 import { useTypeFormStore } from '../../stores/typeForm';
+import { useTextErrorFormStore } from '../../stores/textErrorForm';
 
 export default function RegistrationForm() {
     type StatusInput = 'error' | '';
@@ -17,7 +18,13 @@ export default function RegistrationForm() {
 
     const typeForm = useTypeFormStore((state) => state.changeTypeForm);
 
-    const resultValidate = (
+    const textErrorForm = useTextErrorFormStore((state) => state.textError);
+
+    const changeTextErrorForm = useTextErrorFormStore(
+        (state) => state.changeTextError
+    );
+
+    const resultValidate = async (
         statusValidateLogin: boolean,
         statusValidatePassword: boolean,
         loginInput: string,
@@ -34,13 +41,20 @@ export default function RegistrationForm() {
         else setErrorPasswordReg('');
         // Blocks UI Errors
 
-        if (statusValidateLogin && statusValidatePassword)
-            sendDataToBackend(
+        if (statusValidateLogin && statusValidatePassword) {
+            const resultSendData = await sendDataToBackend(
                 statusValidateLogin,
                 statusValidatePassword,
                 loginInput,
                 passwordInput
             );
+            if (resultSendData === 409) {
+                changeTextErrorForm('Извините, такой аккаунт уже создан');
+                setTimeout(() => {
+                    changeTextErrorForm('');
+                }, 5000);
+            }
+        }
     };
 
     const sendValidateData = (loginInput: string, passwordInput: string) => {
@@ -81,6 +95,7 @@ export default function RegistrationForm() {
                 >
                     Зарегистрироваться
                 </button>
+                <p className='text-error-form'>{textErrorForm}</p>
             </div>
             <p
                 className='form__little-description-form'

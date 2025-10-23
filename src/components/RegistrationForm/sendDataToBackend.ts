@@ -1,6 +1,6 @@
 import { usePopupRegStore } from '../../stores/popupReg';
 
-function sendDataToBackend(
+async function sendDataToBackend(
     statusValidateLogin: boolean,
     statusValidatePassword: boolean,
     loginInput: string,
@@ -9,7 +9,7 @@ function sendDataToBackend(
     if (statusValidateLogin && statusValidatePassword) {
         const { changeStatusPopup } = usePopupRegStore.getState();
 
-        fetch('api/regNewUser', {
+        const result = await fetch('api/regNewUser', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -19,20 +19,23 @@ function sendDataToBackend(
                 loginUser: loginInput,
                 passwordInputUser: passwordInput,
             }),
-        })
-            .then(async (res) => {
-                const data = await res.json();
-                if (data.statusCreated && data.error === false) {
-                    changeStatusPopup('successReg');
-                }
-            })
-            .catch((error) => {
-                console.log(
-                    'Cannot connect to backend service, error -> ',
-                    error
-                );
-            });
+        });
+
+        const data = await result.json();
+
+        if (data.statusCreated && data.error === false) {
+            changeStatusPopup('successReg');
+            return 0;
+        } else if (
+            !data.statusCreated &&
+            data.error &&
+            data.typeError === 'already_exist'
+        ) {
+            return 409; //already_exist
+        }
+        return 404;
     }
+    return 404;
 }
 
 export default sendDataToBackend;
